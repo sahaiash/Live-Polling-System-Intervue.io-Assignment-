@@ -11,13 +11,15 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send("Hello World");
 })
-const server = app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+const PORT = process.env.PORT || 3001;
+
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: process.env.CORS_ORIGIN || "*",
     methods: ["GET", "POST"]
   }
 });
@@ -304,7 +306,3 @@ io.on('connection', (socket) => {
     io.emit('participantsUpdate',{participants});
   }
 });
-
-
-
-
